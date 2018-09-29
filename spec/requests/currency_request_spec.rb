@@ -2,9 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Currency Requests", :type => :request do
 
-  it "creates lists currency objects" do
-    get "/api/v1/currencies.json"
-    expect(response).to be_ok
+  describe 'currencies#index' do
+    before(:each) do
+      2.times {create(:currency)}
+      get "/api/v1/currencies.json"
+    end
+    it "should make the request successfully" do
+      expect(response).to be_ok
+    end
+    it "should return the currency objects" do
+      expect(JSON.parse(response.body).length).to eq(2)
+    end
 
     # post "/widgets", :widget => {:name => "My Widget"}
     #

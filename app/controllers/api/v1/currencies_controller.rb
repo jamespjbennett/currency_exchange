@@ -1,7 +1,8 @@
 module Api::V1
   class CurrenciesController < ApplicationController
     def index
-      render json: Currency.all
+      @currencies = Currency.all
+      render json: @currencies
     end
   end
 end
