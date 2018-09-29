@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Currency Requests", :type => :request do
 
   it "creates lists currency objects" do
-    get "/api/v1/currencies"
+    get "/api/v1/currencies.json"
     expect(response).to be_ok
 
     # post "/widgets", :widget => {:name => "My Widget"}
