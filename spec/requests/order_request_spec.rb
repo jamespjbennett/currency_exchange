@@ -36,7 +36,6 @@ RSpec.describe "Order Requests", :type => :request do
       it 'should format the total into converted currency' do
         expect(json_response["formatted_purchase_amount"]).to eq('£80.00')
       end
-    #
     end
 
   end

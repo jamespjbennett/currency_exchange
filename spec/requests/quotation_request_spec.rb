@@ -10,6 +10,8 @@ RSpec.describe "Quotation Requests", :type => :request do
     end
 
     let(:valid_attributes) { {based_requested_amount: 100, exchange_rate_id: @exchange_rate.id } }
+    let(:invalid_attributes_1) { {based_requested_amount: 0, exchange_rate_id: @exchange_rate.id } }
+    let(:invalid_attributes_2) { {based_requested_amount: 100, exchange_rate_id:10 } }
 
     context 'when the request is valid' do
       before { post '/api/v1/quotations.json', params: valid_attributes }
@@ -27,6 +29,20 @@ RSpec.describe "Quotation Requests", :type => :request do
         expect(json_response["formatted_total"]).to eq('£80.00')
       end
 
+    end
+
+
+    context 'when the request is invalid' do
+      it "should return error if requested amount is 0" do
+        post '/api/v1/quotations.json', params: invalid_attributes_1
+        expect(json_response["errors"]).to_not eq(nil)
+        expect(json_response["errors"].values).to include(["must be greater than 0"])
+      end
+      it "should return error if exchange rate doesnt exist" do
+        post '/api/v1/quotations.json', params: invalid_attributes_2
+        expect(json_response["errors"]).to_not eq(nil)
+        expect(json_response["errors"].values).to include(["must exist"])
+      end
     end
 
     def json_response

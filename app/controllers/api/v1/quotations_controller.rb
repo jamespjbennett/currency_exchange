@@ -1,8 +1,13 @@
 module Api::V1
   class QuotationsController < ApplicationController
+
     def create
       @quotation = Quotation.create(quotation_params)
-      render json: @quotation.to_json
+      if @quotation.valid?
+        render json: @quotation.to_json
+      else
+        render json: {errors: @quotation.errors}
+      end
     end
 
     private
