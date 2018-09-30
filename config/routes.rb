@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :currencies
       resources :quotations
       resources :exchange_rates
+      resources :orders
     end
   end
 end
