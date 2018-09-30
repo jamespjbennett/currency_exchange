@@ -13,3 +13,6 @@ currency_2 = Currency.create(country_code: 'GBP', denomination: '£')
 ExchangeRate.delete_all
 er1 = ExchangeRate.create(base_currency_id: 1, converted_currency_id: 2, rate: 0.8)
 er2 = ExchangeRate.create(base_currency_id: 2, converted_currency_id: 1, rate: 1.2)
+
+Quotation.delete_all
+q1 = Quotation.create(based_requested_amount: 100, exchange_rate_id: er1.id)

@@ -1,12 +1,13 @@
 require "rails_helper"
-
+require './spec/shared/currencies'
 RSpec.describe "Quotation Requests", :type => :request do
 
   describe 'create quotation' do
+
+    include_context 'currencies'
+    
     before(:each) do
-      base_currency = create(:currency, country_code: 'USD', denomination: '$')
-      converted_currency_id = create(:currency, country_code: 'GBP', denomination: '£')
-      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency_id.id, rate: 0.8)
+      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
     end
 
     let(:valid_attributes) { {based_requested_amount: 100, exchange_rate_id: @exchange_rate.id } }
@@ -51,4 +52,7 @@ RSpec.describe "Quotation Requests", :type => :request do
 
   end
 
+  describe 'show quotation' do
+
+  end
 end

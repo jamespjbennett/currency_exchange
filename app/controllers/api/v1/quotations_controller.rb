@@ -10,11 +10,19 @@ module Api::V1
       end
     end
 
+    def show
+      render json: @quotation
+    end
+
     private
 
     def quotation_params
       # whitelist params
       params.permit(:based_requested_amount, :exchange_rate_id)
+    end
+
+    def set_quotation
+      @quotation = Quotation.find(params[:id])
     end
   end
 end
