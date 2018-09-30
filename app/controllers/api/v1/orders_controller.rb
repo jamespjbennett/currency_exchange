@@ -2,7 +2,8 @@ module Api::V1
   class OrdersController < ApplicationController
 
     def create
-      render json: {success:true}
+      @order = Order.create(order_params)
+      render json: @order
     end
     private
 
