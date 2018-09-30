@@ -4,4 +4,8 @@ class ExchangeRate < ApplicationRecord
   has_many :quotations
   validates :rate, presence: true
 
+  def conversion_rate
+    {country: converted_currency.country_code, rate: rate}
+  end
+
 end

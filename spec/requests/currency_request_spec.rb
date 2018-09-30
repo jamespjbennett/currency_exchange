@@ -24,7 +24,7 @@ RSpec.describe "Currency Requests", :type => :request do
       expect(response).to be_ok
     end
     it "should return the currency object" do
-      expect(JSON.parse(response.body)['id']).to eq(@currency.id)
+      expect(JSON.parse(response.body)['country_code']).to eq(@currency.country_code)
     end
   end
 

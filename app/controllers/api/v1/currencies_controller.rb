@@ -4,11 +4,11 @@ module Api::V1
 
     def index
       @currencies = Currency.all
-      render json: @currencies
+      render json: @currencies.map(&:to_json)
     end
 
     def show
-      render json: @currency
+      render json: @currency.to_json
     end
 
     private
