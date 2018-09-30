@@ -6,10 +6,10 @@ RSpec.describe "Quotation Requests", :type => :request do
     before(:each) do
       base_currency = create(:currency, country_code: 'USD', denomination: '$')
       converted_currency_id = create(:currency, country_code: 'GBP', denomination: '£')
-      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency_id.id, rate: 1.2)
+      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency_id.id, rate: 0.8)
     end
 
-    let(:valid_attributes) { { quotation: {based_requested_amount: 100, exchange_rate_id: @exchange_rate.id } }}
+    let(:valid_attributes) { {based_requested_amount: 100, exchange_rate_id: @exchange_rate.id } }
 
     context 'when the request is valid' do
       before { post '/api/v1/quotations.json', params: valid_attributes }
@@ -18,10 +18,16 @@ RSpec.describe "Quotation Requests", :type => :request do
         expect(response).to be_ok
       end
 
+      it "should incremeent the number of quotations" do
+        expect(Quotation.count).to eq(1)
+      end
+
+      it "should calculate converted total" do
+        expect(JSON.parse(response.body)["converted_total"]).to eq(80)
+      end
+
     end
-    # it "should return the currency objects" do
-    #   expect(JSON.parse(response.body).length).to eq(2)
-    # end
+
   end
 
 end

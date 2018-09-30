@@ -1,6 +1,5 @@
 module Api::V1
   class QuotationsController < ApplicationController
-
     def create
       @quotation = Quotation.create(quotation_params)
       render json: @quotation

@@ -11,5 +11,5 @@ currency_1 = Currency.create(country_code: 'USD', denomination: '$')
 currency_2 = Currency.create(country_code: 'GBP', denomination: '£')
 
 ExchangeRate.delete_all
-er1 = ExchangeRate.create(base_currency_id: 1, converted_currency_id: 2, rate: 1.2)
-er2 = ExchangeRate.create(base_currency_id: 2, converted_currency_id: 1, rate: 0.8)
+er1 = ExchangeRate.create(base_currency_id: 1, converted_currency_id: 2, rate: 0.8)
+er2 = ExchangeRate.create(base_currency_id: 2, converted_currency_id: 1, rate: 1.2)
