@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :currencies
       resources :quotations
+      resources :exchange_rates
     end
   end
 end
