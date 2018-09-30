@@ -27,18 +27,4 @@ RSpec.describe "Currency Requests", :type => :request do
       expect(JSON.parse(response.body)['country_code']).to eq(@currency.country_code)
     end
   end
-
-    # post "/widgets", :widget => {:name => "My Widget"}
-    #
-    # expect(response).to redirect_to(assigns(:widget))
-    # follow_redirect!
-    #
-    # expect(response).to render_template(:show)
-    # expect(response.body).to include("Widget was successfully created.")
-
-
-  # it "does not render a different template" do
-  #   get "/widgets/new"
-  #   expect(response).to_not render_template(:show)
-  # end
 end
