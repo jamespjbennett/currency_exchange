@@ -12,14 +12,22 @@ class Quotation < ApplicationRecord
     exchange_rate.converted_currency.country_code
   end
 
+  def base_currency
+    exchange_rate.base_currency
+  end
+
+  def converted_currency
+    exchange_rate.converted_currency
+  end
+
   def formatted_total
     Money.new(converted_total*100, local_currency_code).format
   end
 
   def to_json(*)
     JSON.dump({
-      base_currency: exchange_rate.base_currency.country_code,
-      converted_currency: exchange_rate.converted_currency.country_code,
+      base_currency: base_currency.country_code,
+      converted_currency: converted_currency.country_code,
       requested_base_currency_amount: based_requested_amount,
       converted_total: converted_total,
       formatted_total: formatted_total,

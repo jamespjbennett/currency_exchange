@@ -11,7 +11,7 @@ RSpec.describe "Order Requests", :type => :request do
       @user = create(:user)
     end
 
-    let(:valid_attributes) { {quotation_id: @quotation.id, user_id: @user.id, exchange_rate_id: @exchange_rate.id } }
+    let(:valid_attributes) { {quotation_id: @quotation.id, user_id: @user.id} }
 
     context 'when the request is valid' do
       before { post '/api/v1/orders.json', params: valid_attributes }
@@ -19,14 +19,22 @@ RSpec.describe "Order Requests", :type => :request do
       it "should make the request successfully" do
         expect(response).to be_ok
       end
-    #
+
       it "should incremeent the number of orders" do
         expect(Order.count).to eq(1)
       end
-    #
+
       it "should transfer total from quotation" do
         expect(JSON.parse(response.body)["purchase_amount"]).to eq(@quotation.converted_total)
-        # expect(JSON.parse(response.body)["formatted_total"]).to eq('£80.00')
+      end
+
+      it 'should return copied attributes from associated quotation' do
+        expect(JSON.parse(response.body)["base_currency"]).to eq('USD')
+        expect(JSON.parse(response.body)["converted_currency"]).to eq('GBP')
+      end
+
+      it 'should format the total into converted currency' do
+        expect(JSON.parse(response.body)["formatted_purchase_amount"]).to eq('£80.00')
       end
     #
     end
