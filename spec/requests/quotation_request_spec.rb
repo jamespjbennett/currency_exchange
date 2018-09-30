@@ -24,6 +24,7 @@ RSpec.describe "Quotation Requests", :type => :request do
 
       it "should calculate converted total" do
         expect(JSON.parse(response.body)["converted_total"]).to eq(80)
+        expect(JSON.parse(response.body)["formatted_total"]).to eq('£80.00')
       end
 
     end
