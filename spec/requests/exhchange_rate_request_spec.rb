@@ -17,9 +17,9 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
         expect(response).to be_ok
       end
       #
-      # it "should incremeent the number of quotations" do
-      #   expect(Quotation.count).to eq(1)
-      # end
+      it "should incremeent the number of quotations" do
+        expect(ExchangeRate.count).to eq(1)
+      end
       #
       # it "should calculate converted total" do
       #   expect(JSON.parse(response.body)["converted_total"]).to eq(80)
