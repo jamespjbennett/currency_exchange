@@ -24,10 +24,10 @@ RSpec.describe "Order Requests", :type => :request do
         expect(Order.count).to eq(1)
       end
     #
-    #   it "should calculate converted total" do
-    #     expect(JSON.parse(response.body)["converted_total"]).to eq(80)
-    #     expect(JSON.parse(response.body)["formatted_total"]).to eq('£80.00')
-    #   end
+      it "should transfer total from quotation" do
+        expect(JSON.parse(response.body)["purchase_amount"]).to eq(@quotation.converted_total)
+        # expect(JSON.parse(response.body)["formatted_total"]).to eq('£80.00')
+      end
     #
     end
 

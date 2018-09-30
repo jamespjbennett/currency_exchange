@@ -5,6 +5,11 @@ module Api::V1
       @order = Order.create(order_params)
       render json: @order
     end
+
+    def to_json
+        
+    end
+
     private
 
     def order_params
