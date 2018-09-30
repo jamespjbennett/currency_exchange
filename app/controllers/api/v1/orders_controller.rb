@@ -6,10 +6,6 @@ module Api::V1
       render json: @order
     end
 
-    def to_json
-        
-    end
-
     private
 
     def order_params
