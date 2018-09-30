@@ -40,6 +40,10 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
       it "should make the request successfully" do
         expect(response).to be_ok
       end
+
+      it "should return updated attribute correctly" do
+        expect(JSON.parse(response.body)["rate"]).to eq(0.9)
+      end
     end
 
   end
