@@ -2,29 +2,31 @@ require "rails_helper"
 
 RSpec.describe "Exchange Rate Requests", :type => :request do
 
-  describe 'exchange_rates#create' do
+  describe 'create exchange rate' do
     before(:each) do
-      2.times {create(:currency)}
-      get "/api/v1/currencies.json"
+      @base_currency = create(:currency, country_code: 'USD', denomination: '$')
+      @converted_currency = create(:currency, country_code: 'GBP', denomination: '£')
     end
-    it "should make the request successfully" do
-      expect(response).to be_ok
-    end
-    # it "should return the currency objects" do
-    #   expect(JSON.parse(response.body).length).to eq(2)
-    # end
-  end
 
-  # describe 'currencies#show' do
-  #   before(:each) do
-  #     @currency = create(:currency)
-  #     get "/api/v1/currencies/#{@currency.country_code}"
-  #   end
-  #   it "should make the request successfully" do
-  #     expect(response).to be_ok
-  #   end
-  #   it "should return the currency object" do
-  #     expect(JSON.parse(response.body)['country_code']).to eq(@currency.country_code)
-  #   end
-  # end
+    let(:valid_attributes) { {base_currency_id: @base_currency.id, converted_currency_id: @converted_currency.id, rate: 0.8 } }
+
+    context 'when the request is valid' do
+      before { post '/api/v1/exchange_rates.json', params: valid_attributes }
+
+      it "should make the request successfully" do
+        expect(response).to be_ok
+      end
+      #
+      # it "should incremeent the number of quotations" do
+      #   expect(Quotation.count).to eq(1)
+      # end
+      #
+      # it "should calculate converted total" do
+      #   expect(JSON.parse(response.body)["converted_total"]).to eq(80)
+      #   expect(JSON.parse(response.body)["formatted_total"]).to eq('£80.00')
+      # end
+
+    end
+
+  end
 end
