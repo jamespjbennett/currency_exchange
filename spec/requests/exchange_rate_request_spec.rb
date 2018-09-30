@@ -42,9 +42,12 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
       end
 
       it "should return updated attribute correctly" do
-        expect(JSON.parse(response.body)["rate"]).to eq(0.9)
+        expect(json_response["rate"]).to eq(0.9)
       end
     end
 
+    def json_response
+      JSON.parse(response.body)
+    end
   end
 end

@@ -25,20 +25,24 @@ RSpec.describe "Order Requests", :type => :request do
       end
 
       it "should transfer total from quotation" do
-        expect(JSON.parse(response.body)["purchase_amount"]).to eq(@quotation.converted_total)
+        expect(json_response["purchase_amount"]).to eq(@quotation.converted_total)
       end
 
       it 'should return copied attributes from associated quotation' do
-        expect(JSON.parse(response.body)["base_currency"]).to eq('USD')
-        expect(JSON.parse(response.body)["converted_currency"]).to eq('GBP')
+        expect(json_response["base_currency"]).to eq('USD')
+        expect(json_response["converted_currency"]).to eq('GBP')
       end
 
       it 'should format the total into converted currency' do
-        expect(JSON.parse(response.body)["formatted_purchase_amount"]).to eq('£80.00')
+        expect(json_response["formatted_purchase_amount"]).to eq('£80.00')
       end
     #
     end
 
+  end
+
+  def json_response
+    JSON.parse(response.body)
   end
 
 end
