@@ -13,6 +13,8 @@ RSpec.describe "Order Requests", :type => :request do
     end
 
     let(:valid_attributes) { {quotation_id: @quotation.id, user_id: @user.id} }
+    let(:invalid_attributes_1) { {quotation_id: @quotation.id} }
+    let(:invalid_attributes_2) { {quotation_id: 100, user_id: @user.id} }
 
     context 'when the request is valid' do
       before { post '/api/v1/orders.json', params: valid_attributes }
@@ -36,6 +38,20 @@ RSpec.describe "Order Requests", :type => :request do
 
       it 'should format the total into converted currency' do
         expect(json_response["formatted_value"]).to eq('£80.00')
+      end
+    end
+
+    context 'when the request is invalid' do
+      it 'should validate user exists' do
+        post '/api/v1/orders.json', params: invalid_attributes_1
+        expect(json_response["errors"]).to_not eq(nil)
+        expect(json_response["errors"].values).to include(["must exist"])
+      end
+
+      it 'should validate quotation exists' do
+        post '/api/v1/orders.json', params: invalid_attributes_1
+        expect(json_response["errors"]).to_not eq(nil)
+        expect(json_response["errors"].values).to include(["must exist"])
       end
     end
 
