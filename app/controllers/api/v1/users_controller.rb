@@ -1,11 +1,11 @@
 module Api::V1
   class UsersController < ApplicationController
-    before_action :set_currency, only: [:show]
+    # before_action :set_currency, only: [:show]
 
 
-    # def show
-    #   render json: @currency.to_json
-    # end
+    def show
+      render json: {success: true}
+    end
 
     private
 
