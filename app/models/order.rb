@@ -31,7 +31,7 @@ class Order < ApplicationRecord
     end
   end
 
-  def to_json()
+  def to_json(*)
     {
       base_purchase_amount: Money.new(quotation.based_requested_amount*100, base_currency.country_code).format,
       base_currency: base_currency.country_code,

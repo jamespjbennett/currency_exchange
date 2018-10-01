@@ -1,20 +1,21 @@
 require "rails_helper"
 require './spec/shared/currencies'
+require './spec/shared/orders'
 RSpec.describe "Order Requests", :type => :request do
 
   describe 'create order' do
 
-    include_context 'currencies'
+    include_context 'orders'
+    #
+    # before(:each) do
+    #   @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
+    #   @quotation = create(:quotation, based_requested_amount: 100, exchange_rate_id: @exchange_rate.id)
+    #   @user = create(:user)
+    # end
 
-    before(:each) do
-      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
-      @quotation = create(:quotation, based_requested_amount: 100, exchange_rate_id: @exchange_rate.id)
-      @user = create(:user)
-    end
-
-    let(:valid_attributes) { {quotation_id: @quotation.id, user_id: @user.id} }
-    let(:invalid_attributes_1) { {quotation_id: @quotation.id} }
-    let(:invalid_attributes_2) { {quotation_id: 100, user_id: @user.id} }
+    let(:valid_attributes) { {quotation_id: quotation.id, user_id: user.id} }
+    let(:invalid_attributes_1) { {quotation_id: quotation.id} }
+    let(:invalid_attributes_2) { {quotation_id: 100, user_id: user.id} }
 
     context 'when the request is valid' do
       before { post '/api/v1/orders.json', params: valid_attributes }
@@ -28,7 +29,7 @@ RSpec.describe "Order Requests", :type => :request do
       end
 
       it "should transfer total from quotation" do
-        expect(json_response["total_value"]).to eq(@quotation.converted_total)
+        expect(json_response["total_value"]).to eq(quotation.converted_total)
       end
 
       it 'should return copied attributes from associated quotation' do
@@ -55,8 +56,9 @@ RSpec.describe "Order Requests", :type => :request do
       end
 
       it 'should validate exchange rate is the same as quotation' do
-        @exchange_rate.update(rate: 0.9)
-        post '/api/v1/orders.json', params: valid_attributes
+        quotation_2 = create(:quotation, based_requested_amount: 100, exchange_rate_id: exchange_rate.id)
+        exchange_rate.update(rate: 0.9)
+        post '/api/v1/orders.json', params: {quotation_id: quotation_2.id} 
         expect(json_response["errors"]).to_not eq(nil)
         expect(json_response["errors"].values).to include(["exchange rate has changed. Please create new quotation with adjusted exchange rate."])
       end
@@ -80,6 +82,10 @@ RSpec.describe "Order Requests", :type => :request do
         get '/api/v1/orders.json'
         expect(json_response.length).to eq(2)
       end
+
+  end
+
+  describe 'display order' do
 
   end
 

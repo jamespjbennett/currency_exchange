@@ -6,6 +6,10 @@ module Api::V1
       render json: @orders.map(&:to_json)
     end
 
+    def show
+
+    end
+    
     def create
       @order = Order.create(order_params)
       if @order.valid?

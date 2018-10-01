@@ -3,7 +3,7 @@ class Quotation < ApplicationRecord
   belongs_to :exchange_rate
   validates :based_requested_amount, presence: true
   validates :based_requested_amount, numericality: { greater_than: 0 }
-  after_create :calculate_converted_total, :store_current_exhchange_rate
+  after_create :calculate_converted_total, :store_current_exchange_rate
 
   # CALCULATED THE QUOTATION AMOUNT BASED ON THE BASED AMOUNT AND EXCHANGE RATE
   def calculate_converted_total
@@ -11,7 +11,7 @@ class Quotation < ApplicationRecord
   end
 
   # STORE CURRENT EXCHANGE RATE TO COMPARE WHEN CONVERTED TO ORDER
-  def store_current_exhchange_rate
+  def store_current_exchange_rate
     update(current_exchange_rate: exchange_rate.rate)
   end
 
@@ -34,7 +34,7 @@ class Quotation < ApplicationRecord
     Money.new(converted_total*100, local_currency_code).format
   end
 
-  def to_json()
+  def to_json(*)
     JSON.dump({
       base_currency: base_currency.country_code,
       converted_currency: converted_currency.country_code,

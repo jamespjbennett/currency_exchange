@@ -1,5 +1,6 @@
 module Api::V1
   class QuotationsController < ApplicationController
+    before_action :set_quotation, only: [:show]
 
     def create
       @quotation = Quotation.create(quotation_params)

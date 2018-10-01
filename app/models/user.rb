@@ -9,7 +9,7 @@ class User < ApplicationRecord
     grouped_orders.map{|c| {c[0].denomination => c[1].map(&:purchase_amount).reduce(:+)}}
   end
 
-  def to_json()
+  def to_json(*)
     JSON.dump({
       name: name,
       orders: orders.map(&:to_json),

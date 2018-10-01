@@ -9,7 +9,7 @@ class Currency < ApplicationRecord
     base_currency_rates.map(&:conversion_rate)
   end
 
-  def to_json()
+  def to_json(*)
     {
       country_code: country_code,
       denomination: denomination,
