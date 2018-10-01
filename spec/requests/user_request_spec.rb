@@ -14,9 +14,11 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
       it "should make the request successfully" do
         expect(response).to be_ok
       end
-      # it "should return the currency object" do
-      #   expect(json_response['country_code']).to eq(@currency.country_code)
-      # end
+
+      it "should display the correct user id" do
+        expect(json_response["name"]).to eq('test')
+      end
+
     end
   end
 

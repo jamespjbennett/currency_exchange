@@ -1,16 +1,16 @@
 module Api::V1
   class UsersController < ApplicationController
-    # before_action :set_currency, only: [:show]
+    before_action :set_user, only: [:show]
 
 
     def show
-      render json: {success: true}
+      render json: @user
     end
 
     private
 
-    # def set_currency
-    #   @currency = Currency.find_by(country_code: params[:id])
-    # end
+    def set_user
+      @user = User.find(params[:id])
+    end
   end
 end
