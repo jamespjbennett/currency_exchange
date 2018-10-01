@@ -5,7 +5,7 @@ RSpec.describe "Quotation Requests", :type => :request do
   describe 'create quotation' do
 
     include_context 'currencies'
-    
+
     before(:each) do
       @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
     end

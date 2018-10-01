@@ -1,12 +1,13 @@
 require "rails_helper"
-
+require './spec/shared/currencies'
 RSpec.describe "Order Requests", :type => :request do
 
   describe 'create order' do
+
+    include_context 'currencies'
+
     before(:each) do
-      base_currency = create(:currency, country_code: 'USD', denomination: '$')
-      converted_currency_id = create(:currency, country_code: 'GBP', denomination: '£')
-      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency_id.id, rate: 0.8)
+      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
       @quotation = create(:quotation, based_requested_amount: 100, exchange_rate_id: @exchange_rate.id)
       @user = create(:user)
     end
@@ -37,6 +38,24 @@ RSpec.describe "Order Requests", :type => :request do
         expect(json_response["formatted_purchase_amount"]).to eq('£80.00')
       end
     end
+
+  end
+
+  describe 'list orders' do
+      include_context 'currencies'
+      before(:each) do
+        @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
+        @quotation = create(:quotation, based_requested_amount: 100, exchange_rate_id: @exchange_rate.id)
+        @quotation2 = create(:quotation, based_requested_amount: 50, exchange_rate_id: @exchange_rate.id)
+        @user = create(:user)
+      end
+
+      it "should list orders all orders" do
+        create(:order, user_id: @user.id, quotation_id: @quotation.id)
+        create(:order, user_id: @user.id, quotation_id: @quotation2.id)
+        get '/api/v1/orders.json'
+        expect(json_response.length).to eq(2)
+      end
 
   end
 
