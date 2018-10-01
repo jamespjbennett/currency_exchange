@@ -13,7 +13,6 @@ module Api::V1
       else
         render json: {errors: @order.errors}
       end
-      render json: @order
     end
 
     private

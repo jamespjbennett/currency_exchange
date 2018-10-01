@@ -30,6 +30,10 @@ RSpec.describe "Quotation Requests", :type => :request do
         expect(json_response["formatted_total"]).to eq('£80.00')
       end
 
+      it "should populate currenct exchange rate" do
+        expect(json_response["current_exchange_rate"]).to eq(@exchange_rate.rate)
+      end
+
     end
 
 
