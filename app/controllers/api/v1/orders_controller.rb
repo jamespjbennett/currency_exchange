@@ -2,8 +2,8 @@ module Api::V1
   class OrdersController < ApplicationController
 
     def index
-        @orders = Order.all
-        render json: @orders.map(&:to_json)
+      @orders = Order.all
+      render json: @orders.map(&:to_json)
     end
 
     def create

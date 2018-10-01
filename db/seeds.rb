@@ -16,3 +16,11 @@ er2 = ExchangeRate.create(base_currency_id: 2, converted_currency_id: 1, rate: 1
 
 Quotation.delete_all
 q1 = Quotation.create(based_requested_amount: 100, exchange_rate_id: er1.id)
+q2 = Quotation.create(based_requested_amount: 200, exchange_rate_id: er2.id)
+
+User.delete_all
+user = User.create(name: 'Test')
+
+Order.delete_all
+o1 = Order.create(quotation_id: q1.id, user_id: user.id )
+o1 = Order.create(quotation_id: q2.id, user_id: user.id )

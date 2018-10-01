@@ -19,11 +19,11 @@ class Order < ApplicationRecord
 
   def to_json(*)
     JSON.dump({
-      purchase_amount: purchase_amount,
+      base_purchase_amount: Money.new(purchase_amount*100, base_currency.country_code).format,
       base_currency: base_currency.country_code,
       converted_currency: converted_currency.country_code,
-      purchase_amount: purchase_amount,
-      formatted_purchase_amount: Money.new(purchase_amount*100, converted_currency.country_code).format
+      total_value: purchase_amount,
+      formatted_value: Money.new(purchase_amount*100, converted_currency.country_code).format
     })
   end
 
