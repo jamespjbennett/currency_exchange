@@ -53,6 +53,14 @@ RSpec.describe "Order Requests", :type => :request do
         expect(json_response["errors"]).to_not eq(nil)
         expect(json_response["errors"].values).to include(["must exist"])
       end
+
+      it 'should validate exchange rate is the same as quotation' do
+        @exchange_rate.update(rate: 0.9)
+        post '/api/v1/orders.json', params: valid_attributes
+        expect(json_response["errors"]).to_not eq(nil)
+        expect(json_response["errors"].values).to include(["exchange rate has changed. Please create new quotation with adjusted exchange rate."])
+      end
+
     end
 
   end
