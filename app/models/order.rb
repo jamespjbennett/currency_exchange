@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :quotation
   validates :user_id,:quotation_id, presence: true
+  validate :exchange_rate_hasnt_changed
   after_create :transfer_purchase_attributes
 
   # AFTER CREATION - COPY THE AMOUNT OVER FROM THE ATTACHED QUOTATION
@@ -18,6 +19,16 @@ class Order < ApplicationRecord
   # REFERENCE THE CONVERTED CURRENCY FROM THE QUOTATION
   def converted_currency
     quotation.converted_currency
+  end
+
+  # CUSTOM VALIDATION - MAKE SURE EXCHANGE RATE IS THE SAME AS WHEN QUOTATION WAS CREATED
+  def exchange_rate_hasnt_changed
+    if quotation
+      exchange_rate_equal = (quotation.exchange_rate.rate ==  quotation.current_exchange_rate)
+      if !exchange_rate_equal
+        errors.add(:quotation_id, "exchange rate has changed. Please create new quotation with adjusted exchange rate.")
+      end
+    end
   end
 
   def to_json(*)
