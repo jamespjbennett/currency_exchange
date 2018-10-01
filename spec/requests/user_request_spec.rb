@@ -8,7 +8,8 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
     include_context 'orders'
 
     context "return correct attributes" do
-      before { get "/api/v1/users/#{user.id}.json" }
+      before { get "/api/v1/users/#{user.id}.json"}
+
       it "should make the request successfully" do
         expect(response).to be_ok
       end
@@ -22,6 +23,13 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
         user.orders << order
         get "/api/v1/users/#{user.id}.json"
         expect(json_response["orders"].length).to eq(1)
+      end
+
+      it "should display the users currency balance" do
+        user.orders << order << order_2
+        get "/api/v1/users/#{user.id}.json"
+        expect(json_response["available_currency"][0]["£"]).to eq(80)
+        expect(json_response["available_currency"][1]["$"]).to eq(120)
       end
 
     end
