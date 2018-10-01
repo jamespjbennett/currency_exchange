@@ -34,7 +34,7 @@ class Quotation < ApplicationRecord
     Money.new(converted_total*100, local_currency_code).format
   end
 
-  def to_json(*)
+  def to_json()
     JSON.dump({
       base_currency: base_currency.country_code,
       converted_currency: converted_currency.country_code,
