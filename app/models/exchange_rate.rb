@@ -6,6 +6,7 @@ class ExchangeRate < ApplicationRecord
 
   validates :rate, presence: true
 
+  # EXCHANGE RATES ARE DISPLAYED AS ATTRIBTUTES OF A CURRENCY
   def conversion_rate
     {country: converted_currency.country_code, rate: rate}
   end

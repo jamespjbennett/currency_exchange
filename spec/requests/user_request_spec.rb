@@ -5,6 +5,7 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
 
   describe 'users#show' do
 
+    # PREPOPULATED ORDERS AND ASSOSICATIONS OBJECTS FOR REFERENCE
     include_context 'orders'
 
     context "return correct attributes" do
@@ -26,6 +27,7 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
       end
 
       it "should display the users currency balance" do
+        # PUSH 2 ORDERS INTO THE USER TO TEST THE JSON RESPONSE OBJECT RETURNING ALL CURRENCIES
         user.orders << order << order_2
         get "/api/v1/users/#{user.id}.json"
         expect(json_response["available_currency"][0]["£"]).to eq(80)

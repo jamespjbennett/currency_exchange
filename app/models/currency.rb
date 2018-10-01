@@ -4,6 +4,7 @@ class Currency < ApplicationRecord
   has_many :quotations, through: :exchange_rates
   validates :country_code, :denomination, presence: true
 
+  # DISPLAY ALL ASSOSICATED EXCHANGE RATES OF THE CURRENCY
   def rates
     base_currency_rates.map(&:conversion_rate)
   end

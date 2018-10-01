@@ -8,6 +8,11 @@ module Api::V1
 
     def create
       @order = Order.create(order_params)
+      if @order.valid?
+        render json: @order.to_json
+      else
+        render json: {errors: @order.errors}
+      end
       render json: @order
     end
 
