@@ -18,7 +18,7 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
       end
 
       it "should display the users orders" do
-        # FOR SOME REASON THIS ONLY WORKED IF I MAKE THE REQUEST AGAIN?
+        # FOR SOME REASON THIS ONLY WORKED IF I PUSH THE ORDERS INTO THE USER OBJECT?
         user.orders << order
         get "/api/v1/users/#{user.id}.json"
         expect(json_response["orders"].length).to eq(1)
