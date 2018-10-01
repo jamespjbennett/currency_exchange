@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :quotations
       resources :exchange_rates
       resources :orders
+      resources :users
     end
   end
 end
