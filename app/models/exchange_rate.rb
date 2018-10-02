@@ -11,4 +11,13 @@ class ExchangeRate < ApplicationRecord
     {country: converted_currency.country_code, rate: rate}
   end
 
+  def to_json(*)
+    {
+      rate: rate,
+      conversion_rate: conversion_rate,
+      base_currency: base_currency.country_code,
+      converted_currency: converted_currency.country_code,
+    }
+  end
+
 end

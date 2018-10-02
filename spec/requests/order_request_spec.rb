@@ -58,7 +58,7 @@ RSpec.describe "Order Requests", :type => :request do
       it 'should validate exchange rate is the same as quotation' do
         quotation_2 = create(:quotation, based_requested_amount: 100, exchange_rate_id: exchange_rate.id)
         exchange_rate.update(rate: 0.9)
-        post '/api/v1/orders.json', params: {quotation_id: quotation_2.id} 
+        post '/api/v1/orders.json', params: {quotation_id: quotation_2.id}
         expect(json_response["errors"]).to_not eq(nil)
         expect(json_response["errors"].values).to include(["exchange rate has changed. Please create new quotation with adjusted exchange rate."])
       end
@@ -68,17 +68,11 @@ RSpec.describe "Order Requests", :type => :request do
   end
 
   describe 'list orders' do
-      include_context 'currencies'
-      before(:each) do
-        @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
-        @quotation = create(:quotation, based_requested_amount: 100, exchange_rate_id: @exchange_rate.id)
-        @quotation2 = create(:quotation, based_requested_amount: 50, exchange_rate_id: @exchange_rate.id)
-        @user = create(:user)
-      end
+      include_context 'orders'
 
-      it "should list orders all orders" do
-        create(:order, user_id: @user.id, quotation_id: @quotation.id)
-        create(:order, user_id: @user.id, quotation_id: @quotation2.id)
+      it "should list all orders" do
+        create(:order, user_id: user.id, quotation_id: quotation.id)
+        create(:order, user_id: user.id, quotation_id: quotation_2.id)
         get '/api/v1/orders.json'
         expect(json_response.length).to eq(2)
       end
@@ -86,6 +80,18 @@ RSpec.describe "Order Requests", :type => :request do
   end
 
   describe 'display order' do
+    include_context 'orders'
+    
+    before { get "/api/v1/orders/#{order.id}.json" }
+
+    it "should list be ok" do
+      expect(response).to be_ok
+    end
+    it "should return valid order" do
+      expect(json_response["total_value"]).to eq(80.0)
+      expect(json_response["base_currency"]).to eq("USD")
+      expect(json_response["base_purchase_amount"]).to eq("$100.00")
+    end
 
   end
 

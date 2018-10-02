@@ -42,9 +42,28 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
         expect(json_response["rate"]).to eq(0.9)
       end
     end
+  end
 
-    def json_response
-      JSON.parse(response.body)
+  describe 'list exchange rates' do
+    before(:each) do
+      get "/api/v1/exchange_rates.json"
+      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
+      @exchange_rate_2 = create(:exchange_rate, base_currency_id: converted_currency.id, converted_currency_id: base_currency.id, rate: 0.8)
     end
+
+    before { get "/api/v1/exchange_rates.json" }
+
+    it "should make the request successfully" do
+      expect(response).to be_ok
+    end
+
+    it "should make the request successfully" do
+      expect(json_response.length).to eq(2)
+    end
+  end
+
+
+  def json_response
+    JSON.parse(response.body)
   end
 end

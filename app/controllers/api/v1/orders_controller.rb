@@ -1,5 +1,6 @@
 module Api::V1
   class OrdersController < ApplicationController
+    before_action :set_order, only: [:show]
 
     def index
       @orders = Order.all
@@ -7,9 +8,9 @@ module Api::V1
     end
 
     def show
-
+      render json:  @order.to_json
     end
-    
+
     def create
       @order = Order.create(order_params)
       if @order.valid?
@@ -24,6 +25,10 @@ module Api::V1
     def order_params
       # whitelist params
       params.permit(:quotation_id, :user_id, :exchange_rate_id)
+    end
+
+    def set_order
+      @order = Order.find(params[:id])
     end
   end
 end

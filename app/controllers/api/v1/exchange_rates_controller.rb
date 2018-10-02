@@ -4,12 +4,18 @@ module Api::V1
 
     def create
       @exchange_rate = ExchangeRate.create(exchange_rate_params)
-      render json: @exchange_rate
+      render json: @exchange_rate.to_json
+    end
+
+    def index
+      @exchange_rates = ExchangeRate.all
+      render json: @exchange_rates.map(&:to_json)
     end
 
     def update
+
       @exchange_rate.update(exchange_rate_params)
-      render json: @exchange_rate
+      render json: @exchange_rate.to_json
     end
 
     private

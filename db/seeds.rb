@@ -10,10 +10,11 @@ Currency.delete_all
 
 # CREATE BASE CURRENCIES
 
-currency_1 = Currency.create(country_code: 'USD', denomination: '$')
-currency_2 = Currency.create(country_code: 'GBP', denomination: '£')
-currency_3 = Currency.create(country_code: 'EUR', denomination: '€')
-currency_4 = Currency.create(country_code: 'JPY', denomination: '¥')
+usd = Currency.create(country_code: 'USD', denomination: '$')
+gbp = Currency.create(country_code: 'GBP', denomination: '£')
+eur = Currency.create(country_code: 'EUR', denomination: '€')
+jpy = Currency.create(country_code: 'JPY', denomination: '¥')
+chi = Currency.create(country_code: 'CHI', denomination: '¥')
 
 
 # CREATE EXCHANGE RATES BETWEEN CURRENCIES
@@ -21,15 +22,34 @@ currency_4 = Currency.create(country_code: 'JPY', denomination: '¥')
 ExchangeRate.delete_all
 
 # USD > EXCHANGE RATES
-us_e1 = ExchangeRate.create(base_currency_id: currency_1.id, converted_currency_id: currency_2.id, rate: 0.77)
-us_e2 = ExchangeRate.create(base_currency_id: currency_1.id, converted_currency_id: currency_3.id, rate: 0.86)
-us_e3 = ExchangeRate.create(base_currency_id: currency_1.id, converted_currency_id: currency_4.id, rate: 113)
+us_e1 = ExchangeRate.create(base_currency_id: usd.id, converted_currency_id: gbp.id, rate: 0.77)
+us_e2 = ExchangeRate.create(base_currency_id: usd.id, converted_currency_id: eur.id, rate: 0.86)
+us_e3 = ExchangeRate.create(base_currency_id: usd.id, converted_currency_id: jpy.id, rate: 113)
+us_e4 = ExchangeRate.create(base_currency_id: usd.id, converted_currency_id: chi.id, rate: 6.87)
 
 # GBP > EXCHANGE RATES
-gb_e1 = ExchangeRate.create(base_currency_id: currency_2.id, converted_currency_id: currency_1.id, rate: 1.2)
-gb_e2 = ExchangeRate.create(base_currency_id: currency_2.id, converted_currency_id: currency_3.id, rate: 1.1)
-gb_e3 = ExchangeRate.create(base_currency_id: currency_2.id, converted_currency_id: currency_4.id, rate: 148)
+gb_e1 = ExchangeRate.create(base_currency_id: gbp.id, converted_currency_id: usd.id, rate: 1.2)
+gb_e2 = ExchangeRate.create(base_currency_id: gbp.id, converted_currency_id: eur.id, rate: 1.1)
+gb_e3 = ExchangeRate.create(base_currency_id: gbp.id, converted_currency_id: jpy.id, rate: 148)
+gb_e4 = ExchangeRate.create(base_currency_id: gbp.id, converted_currency_id: chi.id, rate: 8.94)
 
+# EUR > EXCHANGE RATES
+eu_e1 = ExchangeRate.create(base_currency_id: eur.id, converted_currency_id: gbp.id, rate: 1.14)
+eu_e2 = ExchangeRate.create(base_currency_id: eur.id, converted_currency_id: usd.id, rate: 0.9)
+eu_e3 = ExchangeRate.create(base_currency_id: eur.id, converted_currency_id: jpy.id, rate: 131)
+eu_e4 = ExchangeRate.create(base_currency_id: eur.id, converted_currency_id: chi.id, rate: 7.93)
+
+# JPY > EXCHANGE RATES
+jp_e1 = ExchangeRate.create(base_currency_id: jpy.id, converted_currency_id: gbp.id, rate: 0.006)
+jp_e2 = ExchangeRate.create(base_currency_id: jpy.id, converted_currency_id: usd.id, rate: 0.008)
+jp_e3 = ExchangeRate.create(base_currency_id: jpy.id, converted_currency_id: eur.id, rate: 0.007)
+jp_e4 = ExchangeRate.create(base_currency_id: jpy.id, converted_currency_id: chi.id, rate: 0.060)
+
+# CHI > EXCHANGE RATES
+chi_e1 = ExchangeRate.create(base_currency_id: chi.id, converted_currency_id: gbp.id, rate: 0.11)
+chi_e2 = ExchangeRate.create(base_currency_id: chi.id, converted_currency_id: usd.id, rate: 0.15)
+chi_e3 = ExchangeRate.create(base_currency_id: chi.id, converted_currency_id: eur.id, rate: 0.13)
+chi_e4 = ExchangeRate.create(base_currency_id: chi.id, converted_currency_id: jpy.id, rate: 16.5)
 
 # CREATE QUOTATIONS BASED ON EXCHANGE RATES AND REQUETSED AMOUNT
 
