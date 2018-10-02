@@ -1,9 +1,11 @@
 require "rails_helper"
 require './spec/shared/currencies'
+require './spec/shared/orders'
 
 RSpec.describe "Exchange Rate Requests", :type => :request do
 
   include_context 'currencies'
+  include_context 'orders'
 
   describe 'create exchange rate' do
 
@@ -25,14 +27,11 @@ RSpec.describe "Exchange Rate Requests", :type => :request do
   end
 
   describe 'update exchange rates' do
-    before(:each) do
-      @exchange_rate = create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id, rate: 0.8)
-    end
 
     let(:valid_attributes) { {rate: 0.9 } }
 
     context 'when the request is valid' do
-      before { patch "/api/v1/exchange_rates/#{@exchange_rate.id}.json", params: valid_attributes }
+      before { patch "/api/v1/exchange_rates/#{exchange_rate.id}.json", params: valid_attributes }
 
       it "should make the request successfully" do
         expect(response).to be_ok
