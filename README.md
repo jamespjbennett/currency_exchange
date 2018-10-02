@@ -61,3 +61,5 @@ run `rspec` to run all tests
 * cron job to reguarly update exhcnage exchange rates
 
 * if calculations and logic gets more complicated - split out into service objects and possible value objects
+
+* quotations can only currently be made/requested in based currency - make it so that the quotations can be quoted for in the converted currency too.
