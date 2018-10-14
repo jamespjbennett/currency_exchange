@@ -4,7 +4,11 @@ module Api::V1
 
     def create
       @exchange_rate = ExchangeRate.create(exchange_rate_params)
-      render json: @exchange_rate.to_json
+      if @exchange_rate.valid?
+        render json: @exchange_rate.to_json
+      else
+        render json: {errors: @exchange_rate.errors}
+      end
     end
 
     def index
