@@ -7,15 +7,15 @@ RSpec.shared_context "invalid_exchange_rates" do
     create(:currency, country_code: 'GBP', denomination: '£')
   }
   let(:invalid_exchange_rate_no_base){
-    create(:exchange_rate, converted_currency_id: converted_currency.id, rate: 0.8)
+    build(:exchange_rate, converted_currency_id: converted_currency.id, rate: 0.8)
   }
   let(:invalid_exchange_rate_no_converted){
-    create(:exchange_rate, base_currency_id: base_currency.id, rate: 0.8)
+    build(:exchange_rate, base_currency_id: base_currency.id, rate: 0.8)
   }
   let(:invalid_exchange_rate_no_rate){
-    create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id)
+    build(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: converted_currency.id)
   }
   let(:invalid_exchange_rate_dupes){
-    create(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: base_currency.id,  rate: 0.8)
+    build(:exchange_rate, base_currency_id: base_currency.id, converted_currency_id: base_currency.id,  rate: 0.8)
   }
 end
