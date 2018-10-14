@@ -8,7 +8,11 @@ module Api::V1
     end
 
     def show
-      render json: @currency.to_json
+      if @currency
+        render json: @currency.to_json
+      else
+        render json: {error: "currency not recognized"}
+      end
     end
 
     private

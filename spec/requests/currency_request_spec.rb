@@ -31,8 +31,8 @@ RSpec.describe "Currency Requests", :type => :request do
   describe 'error handling' do
     it 'should return error that currency isnt found' do
       get "/api/v1/currencies/incorrect"
-      expect(json_response["errors"]).to_not eq(nil)
-      expect(json_response["errors"].values).to include(["currency not recognized"])
+      expect(json_response["error"]).to_not eq(nil)
+      expect(json_response["error"]).to include("currency not recognized")
     end
   end
 
