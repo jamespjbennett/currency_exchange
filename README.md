@@ -3,14 +3,14 @@
 ### An API to allow currency conversion quotations and orders between different foreign currencies. Built as a ruby on rails Api.
 
 ### CONFIG
-  
+
 
  * Ruby 2.5.0
  * Rails 5.2.1
 
 ### SET UP
 
-`bundle install` 
+`bundle install`
 
 ` rake db:create db:migrate db:seed`
 
@@ -51,7 +51,7 @@ run `rspec` to run all tests
 
 ## List user orders and available currency
 
-* get `/api/v1/users/[valid user id]` 
+* get `/api/v1/users/[valid user id]`
 
 
 # Further work
@@ -63,3 +63,5 @@ run `rspec` to run all tests
 * if calculations and logic gets more complicated - split out into service objects and possible value objects
 
 * quotations can only currently be made/requested in based currency - make it so that the quotations can be quoted for in the converted currency too.
+
+* create custom validator
