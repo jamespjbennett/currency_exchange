@@ -1,5 +1,4 @@
 class Quotation < ApplicationRecord
-  include ActiveSupport::NumberHelper
   belongs_to :exchange_rate
   validates :based_requested_amount, presence: true
   validates :based_requested_amount, numericality: { greater_than: 0 }
